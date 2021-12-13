@@ -1,8 +1,14 @@
 import React, { useState } from "react";
+// *custom buttom
 import Button from "../UI/Button/Button";
+// *custom input
+
 import Input from "../UI/Input/Input";
+// *sample data
+
 import Data from "../Data";
 import classes from "./Login.module.css";
+
 const Login = ({ setIsLogin }) => {
   // console.log(Data);
   const [username, setUsername] = useState("");
@@ -10,28 +16,36 @@ const Login = ({ setIsLogin }) => {
   const [showPass, setShowPass] = useState(false);
   const [error, setError] = useState("");
   // const [user, setUser] = useState("");
+  // * var to get filtered user
   let user = {};
+  //* haddle action when form gets submitted
   const handleSubmit = (e) => {
     e.preventDefault();
+    //*Getting user based on entered username
     user = Data.filter((dta) => dta.username === username);
-    console.log(user);
-    console.log(user.length);
+
+    //* checking if  user exist
     if (user.length) {
+      //* as user Exist checking password
       if (user[0].password === password) {
         setIsLogin(true);
       } else {
+        //* setting error if password doesnt match
         setError("password not match");
         setTimeout(() => {
           setError("");
         }, 2000);
       }
     } else {
+      //* setting error if Email not found
+
       setError("no user Found with this Email");
       setTimeout(() => {
         setError("");
       }, 2000);
     }
   };
+
   return (
     <div className={classes.Login}>
       <form onSubmit={handleSubmit} className={classes.form}>
@@ -51,6 +65,7 @@ const Login = ({ setIsLogin }) => {
           type={showPass ? "text" : "password"}
           placeholder={"password"}
         />
+
         <div className={classes.labels}>
           <label className={classes.box} htmlFor="show">
             {showPass && (
@@ -75,11 +90,11 @@ const Login = ({ setIsLogin }) => {
               </svg>
             )}
           </label>
+
           <label className={classes.label} htmlFor="show">
             Show Password?
           </label>
         </div>
-
         <input
           id="show"
           type="checkbox"
